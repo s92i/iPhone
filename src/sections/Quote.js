@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
 import styled, { keyframes } from 'styled-components'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
 const Section = styled.section`
 width: 100vw;
@@ -57,8 +59,20 @@ span {
 `
 
 const Quote = () => {
+    gsap.registerPlugin(ScrollTrigger)
+    const sectionRef = useRef(null)
+
+    useLayoutEffect(() => {
+        let Elem = sectionRef.current
+
+        let trigger = ScrollTrigger.create({ trigger: Elem, start: 'top top', pin: true, pinSpacing: false })
+        return () => {
+            if (trigger) trigger.kill()
+        }
+    }, [])
+
     return (
-        <Section>
+        <Section ref={sectionRef}>
             <TextContainer>
                 <Text delay="0s"><span>&#8220; You can't connect the dots looking forward;</span></Text>
                 <Text delay=".4s"><span>&nbsp;&nbsp;&nbsp;you can only connect them looking backward.</span></Text>

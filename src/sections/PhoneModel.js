@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import styled from 'styled-components'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Environment } from '@react-three/drei'
+import { Environment } from '@react-three/drei'
 
 import Model from '../assets/3D-Model/Scene'
 
@@ -16,13 +16,13 @@ background-color: transparent;
 
 const PhoneModel = () => {
     return (
-        <Container>
-            <Canvas>
+        <Container id='phone-model'>
+            <Canvas camera={{ fov: 14 }}>
                 <ambientLight intensity={1.25} />
-                <directionalLight intensity={0.4} />
+                <directionalLight intensity={.4} />
+                <Suspense fallback={null} />
                 <Model />
-                <Environment />
-                <OrbitControls />
+                <Environment preset='night' />
             </Canvas>
         </Container>
     )
